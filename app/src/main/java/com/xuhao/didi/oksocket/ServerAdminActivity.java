@@ -3,6 +3,7 @@ package com.xuhao.didi.oksocket;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCharacteristics;
@@ -84,6 +85,10 @@ public class ServerAdminActivity extends AppCompatActivity {
             log("连接成功");
             mPortEt.setEnabled(false);
             mIPEt.setEnabled(false);
+
+            // 后台
+            Intent serviceIntent = new Intent(ServerAdminActivity.this, MyBackgroundService.class);
+            ServerAdminActivity.this.startService(serviceIntent);
         }
 
         @Override
