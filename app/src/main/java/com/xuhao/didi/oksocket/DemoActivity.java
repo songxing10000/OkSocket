@@ -11,8 +11,8 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -51,11 +51,7 @@ public class DemoActivity extends AppCompatActivity implements IClientIOCallback
 
     private Button mSimpleBtn;
 
-    private Button mComplexBtn;
-
     private Button mServerBtn;
-
-    private Button mAdminBtn;
 
     private IServerManager mServerManager;
 
@@ -68,35 +64,18 @@ public class DemoActivity extends AppCompatActivity implements IClientIOCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
         mSimpleBtn = findViewById(R.id.btn1);
-        mComplexBtn = findViewById(R.id.btn2);
-        mServerBtn = findViewById(R.id.btn3);
-        mAdminBtn = findViewById(R.id.admin);
-        mIPTv = findViewById(R.id.ip);
+         mServerBtn = findViewById(R.id.btn3);
+         mIPTv = findViewById(R.id.ip);
 
         OkServerOptions.setIsDebug(true);
         OkSocketOptions.setIsDebug(true);
         SLog.setIsDebug(true);
 
-        mIPTv.setText("当前IP(Local Device IP):" + getIPAddress());
+        mIPTv.setText("当前IP:" + getIPAddress());
         mSimpleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DemoActivity.this, SimpleDemoActivity.class);
-                startActivity(intent);
-            }
-        });
-        mComplexBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DemoActivity.this, ComplexDemoActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        mAdminBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(DemoActivity.this, ServerAdminActivity.class);
                 startActivity(intent);
             }
         });
@@ -148,7 +127,10 @@ public class DemoActivity extends AppCompatActivity implements IClientIOCallback
             @Override
             public void onClick(View v) {
                 if (!mServerManager.isLive()) {
+                    // 开启服务器后，自动 跳转到 echo sever admin 并传递ip及端口
                     mServerManager.listen();
+                    Intent intent = new Intent(DemoActivity.this, ServerAdminActivity.class);
+                    startActivity(intent);
                 } else {
                     mServerManager.shutdown();
                 }
@@ -160,7 +142,7 @@ public class DemoActivity extends AppCompatActivity implements IClientIOCallback
     protected void onResume() {
         super.onResume();
         flushServerText();
-        mIPTv.setText("当前IP(Local Device IP):" + getIPAddress());
+        mIPTv.setText("当前IP:" + getIPAddress());
     }
 
     private void flushServerText() {
@@ -168,14 +150,14 @@ public class DemoActivity extends AppCompatActivity implements IClientIOCallback
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    mServerBtn.setText(mPort + "服务器关闭(Local Server Demo in " + mPort + " Stop)");
+                    mServerBtn.setText(mPort + "服务器关闭");
                 }
             });
         } else {
             new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
-                    mServerBtn.setText(mPort + "服务器启动(Local Server Demo in " + mPort + " Start)");
+                    mServerBtn.setText(mPort + "服务器启动");
                 }
             });
         }

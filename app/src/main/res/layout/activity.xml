@@ -10,17 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
-        android:text="简单示例(Simple Demo)"
+        android:text="控制端"
         android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/btn2"
-        android:layout_width="match_parent"
-        android:layout_height="65dp"
-        android:layout_marginTop="20dp"
-        android:text="复杂示例(Complex Demo)"
-        android:textAllCaps="false" />
-
 
     <TextView
         android:id="@+id/ip"
@@ -28,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:text="当前IP(Local Device IP):"
+        android:text="当前IP:"
         android:textSize="15sp" />
 
 
@@ -43,14 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/admin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:text="Echo Server Admin"
-            android:textAllCaps="false" />
+
     </RelativeLayout>
 
 </LinearLayout>

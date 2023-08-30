@@ -9,12 +9,12 @@ android {
             storePassword '123456'
         }
     }
-    compileSdkVersion 26
+    compileSdkVersion 34
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "com.xuhao.android.oksocket"
-        minSdkVersion 14
-        targetSdkVersion 26
+        minSdkVersion 21
+        targetSdkVersion 34
         versionCode 1
         versionName "1.0"
     }
@@ -35,12 +35,10 @@ dependencies {
     implementation project(path: ':socket-core')
     implementation project(path: ':socket-core')
     implementation project(path: ':socket-common-interface')
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:26.1.0'
-    compile 'com.android.support:design:26.1.0'
-    compile 'com.google.code.gson:gson:2.8.0'
-//        api 'com.tonystark.android:socket:latest.release'
-//        api 'com.tonystark.android:socket-server:latest.release'
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.code.gson:gson:2.8.0'
         api project(path: ':socket-client')
         api project(path: ':socket-server')
 }
