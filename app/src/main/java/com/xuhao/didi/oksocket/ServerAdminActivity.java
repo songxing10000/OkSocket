@@ -71,6 +71,7 @@ public class ServerAdminActivity extends AppCompatActivity {
     private int originalVolume;
     private PowerManager.WakeLock wakeLock;
 
+    private AlertDialog  dialog;
     private SocketActionAdapter adapter = new SocketActionAdapter() {
 
         @Override
@@ -81,10 +82,6 @@ public class ServerAdminActivity extends AppCompatActivity {
             log("连接成功");
             mPortEt.setEnabled(false);
             mIPEt.setEnabled(false);
-
-            // 后台
-            Intent serviceIntent = new Intent(ServerAdminActivity.this, MyBackgroundService.class);
-            ServerAdminActivity.this.startService(serviceIntent);
         }
 
         @Override
@@ -176,6 +173,25 @@ public class ServerAdminActivity extends AppCompatActivity {
             // 处理异常
             e.printStackTrace();
         }
+        Intent intent = getIntent();
+        String ip = intent.getStringExtra("ip");
+        if (!ip.isEmpty()) {
+            mIPEt.setText(ip);
+            // 点 connect
+            mConnect.performClick();
+
+                    handlePositiveButtonClick();
+
+        }
+
+    }
+    private  View view;
+    private void handlePositiveButtonClick() {
+        mPass = ((EditText) view.findViewById(R.id.pass)).getText().toString();
+        mPortEt.setEnabled(false);
+        mIPEt.setEnabled(false);
+        mManager.connect();
+        dialog.dismiss();
     }
     @Override
     protected void onStop() {
@@ -274,18 +290,15 @@ public class ServerAdminActivity extends AppCompatActivity {
                 }
                 if (!mManager.isConnect()) {
                     initManager();
-                    final View view = LayoutInflater.from(getBaseContext()).inflate(R.layout.alert_admin_login_layout, null);
-                    new AlertDialog.Builder(ServerAdminActivity.this)
-                            .setTitle("Admin Login")
+                     view = LayoutInflater.from(getBaseContext()).inflate(R.layout.alert_admin_login_layout, null);
+                    dialog = new AlertDialog.Builder(ServerAdminActivity.this).setTitle("Admin Login")
                             .setView(view)
                             .setNegativeButton("Cancel", null)
                             .setPositiveButton("Login", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    mPass = ((EditText) view.findViewById(R.id.pass)).getText().toString();
-                                    mPortEt.setEnabled(false);
-                                    mIPEt.setEnabled(false);
-                                    mManager.connect();
+                                    handlePositiveButtonClick();
+
                                 }
                             }).show();
                 } else {

@@ -130,6 +130,7 @@ public class DemoActivity extends AppCompatActivity implements IClientIOCallback
                     // 开启服务器后，自动 跳转到 echo sever admin 并传递ip及端口
                     mServerManager.listen();
                     Intent intent = new Intent(DemoActivity.this, ServerAdminActivity.class);
+                    intent.putExtra("ip", getIPAddress());
                     startActivity(intent);
                 } else {
                     mServerManager.shutdown();
